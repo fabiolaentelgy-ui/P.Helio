@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <title>Cuaderno - Proyecto Helios</title>
 
-https://cdn.plot.ly/plotly-latest.min.js
-https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.jsscript>
+<!-- ✅ LIBRERIAS -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <style>
 body { font-family: Arial; margin:0; background:#f4f4f4; }
@@ -17,16 +18,16 @@ header {
     padding:15px;
 }
 
-/* TITULO */
-.titulo-principal{
+.titulo {
     font-size:20px;
     font-weight:bold;
 }
 
+/* MENU */
 .tabs {
     background:#b60000;
     display:flex;
-    gap:15px;
+    gap:20px;
     padding:10px;
 }
 
@@ -42,12 +43,13 @@ header {
 .seccion { display:none; padding:20px; }
 .activa { display:block; }
 
-/* KPIs */
-.kpis { display:flex; gap:20px; margin:20px; }
+/* KPI */
+.kpis { display:flex; justify-content:center; gap:20px; margin:20px; }
+
 .card {
     background:white;
     padding:20px;
-    flex:1;
+    width:25%;
     text-align:center;
     border-radius:10px;
 }
@@ -56,10 +58,10 @@ header {
 .real{border:3px solid gray;}
 .desv{border:3px solid red;}
 
-button{
+button {
     background:orange;
+    padding:10px;
     border:none;
-    padding:8px;
     cursor:pointer;
 }
 
@@ -69,7 +71,7 @@ button{
 <body>
 
 <header>
-<div class="titulo-principal">📊 Cuaderno - Proyecto Helios</div>
+<div class="titulo">📊 Cuaderno - Proyecto Helios</div>
 </header>
 
 <!-- MENU -->
@@ -78,18 +80,18 @@ button{
 <div class="tab" onclick="mostrar('cascadas')">📊 Tablero de Cascadas</div>
 </div>
 
-<!-- ===================== DEPENDENCIAS ===================== -->
+<!-- ✅ DEPENDENCIAS -->
 <div id="dependencias" class="seccion activa">
 
 <h2>Tablero de Dependencias</h2>
 
-<button onclick="cargarExcel()">📂 Cargar Excel</button>
+<button onclick="subirExcel()">📂 Cargar Excel</button>
 
 <div id="graficoDependencias"></div>
 
 </div>
 
-<!-- ===================== CASCADAS ===================== -->
+<!-- ✅ CASCADAS -->
 <div id="cascadas" class="seccion">
 
 <h2>Tablero de Cascadas</h2>
@@ -108,18 +110,19 @@ button{
 
 <script>
 
-/* ================= NAVEGACION ================= */
+/* ✅ CAMBIO DE VISTA */
 function mostrar(id){
 document.querySelectorAll(".seccion").forEach(s=>s.classList.remove("activa"));
 document.getElementById(id).classList.add("activa");
 }
 
-/* ================= EXCEL ================= */
-function cargarExcel(){
+/* ✅ SUBIR EXCEL */
+function subirExcel(){
 document.getElementById("fileInput").click();
 }
 
 document.getElementById("fileInput").addEventListener("change",function(e){
+
 let reader=new FileReader();
 
 reader.onload=e=>{
@@ -138,6 +141,7 @@ function procesarCascadas(wb){
 let frentes=[], plan=[], real=[];
 
 wb.SheetNames.forEach(s=>{
+
 let ws=wb.Sheets[s];
 
 let p = ws["N3"] ? ws["N3"].v : 0;
@@ -156,25 +160,27 @@ actualizarCascadas(frentes,plan,real);
 
 function actualizarCascadas(f,p,r){
 
-let P=prom(p);
-let R=prom(r);
+let P=promedio(p);
+let R=promedio(r);
 let D=P-R;
 
-plan.innerText=P.toFixed(0)+"%";
-real.innerText=R.toFixed(0)+"%";
-desv.innerText=D.toFixed(0)+"%";
+document.getElementById("plan").innerText=P.toFixed(0)+"%";
+document.getElementById("real").innerText=R.toFixed(0)+"%";
+document.getElementById("desv").innerText=D.toFixed(0)+"%";
 
 Plotly.newPlot("graficoCascadas",[
 {x:f,y:p,type:'bar',name:'Plan',marker:{color:'red'}},
 {x:f,y:r,type:'bar',name:'Real',marker:{color:'pink'}}
-]);
+],
+{title:"Avance por Frente"});
 }
 
 /* ================= DEPENDENCIAS ================= */
 function procesarDependencias(wb){
 
+// 🔥 EJEMPLO SIMPLE (puedes conectar a Excel luego)
 let labels=["Alta","Media","Baja"];
-let values=[50,30,20]; // ejemplo (puedes conectar a Excel)
+let values=[120,80,50];
 
 Plotly.newPlot("graficoDependencias",[
 {
@@ -183,12 +189,11 @@ values:values,
 type:'pie'
 }
 ],
-{title:"Dependencias por Criticidad"}
-);
+{title:"Dependencias por Criticidad"});
 }
 
-/* ================= UTILS ================= */
-function prom(a){
+/* ================= UTIL ================= */
+function promedio(a){
 return a.reduce((x,y)=>x+y,0)/a.length;
 }
 
