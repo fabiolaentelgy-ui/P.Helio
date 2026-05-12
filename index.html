@@ -1,20 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tablero de Dependencias – Proyecto Helios</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Presentación</title>
+    <style>
+        /* Variables de color */
+        :root {
+            --fondo: #1e1e2f;
+            --texto: #ffffff;
+            --acento: #ff4b5c;
+        }
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-  <!-- chartjs-plugin-datalabels -->
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
-  <!-- SheetJS (leer Excel en el navegador) -->
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <!-- Flatpickr datepicker -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  
-  </script>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--fondo);
+            color: var(--texto);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--acento);
+        }
+
+        p {
+            font-size: 1.2rem;
+            max-width: 600px;
+        }
+
+        .boton {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--acento);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .boton:hover {
+            background: #e63b4a;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>¡Bienvenidos a mi Presentación!</h1>
+    </header>
+
+    <main>
+        <p>
+            Hola, soy <strong>Tu Nombre</strong> y esta es una breve presentación sobre mi trabajo y proyectos.
+            Aquí podrás encontrar información sobre mis habilidades, experiencia y cómo contactarme.
+        </p>
+        <a href="https://github.com/tuusuario" class="boton" target="_blank">Ver mi GitHub</a>
+    </main>
+
+    <footer>
+        © 2026 - Creado por Tu Nombre
+    </footer>
 </body>
 </html>
